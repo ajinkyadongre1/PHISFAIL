@@ -1,0 +1,11 @@
+{
+  "name": "phisfail",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PHISFAIL - AI-Powered Cybersecurity SOC Threat Intelligence Platform",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "dev": "cd frontend && npm run dev",
+    "preview": "cd frontend && npm run preview"
+  }
+}

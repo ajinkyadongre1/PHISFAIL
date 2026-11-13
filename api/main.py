@@ -44,14 +44,24 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
-# CORS Configuration
+# CORS Configuration - allow all origins for Vercel preview and production domains
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def path_normalization_middleware(request: Request, call_next):
+    # Ensure routes match whether Vercel passes /api/url or strips /api
+    path = request.scope.get("path", "")
+    for prefix in ["/url", "/sms", "/scam-dna", "/investigator", "/history", "/community", "/stats", "/system"]:
+        if path.startswith(prefix):
+            request.scope["path"] = "/api" + path
+            break
+    return await call_next(request)
 
 # Simple sliding window rate-limiter in memory
 RATE_LIMIT_STORE = {}

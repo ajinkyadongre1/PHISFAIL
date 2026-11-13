@@ -8,7 +8,12 @@ from backend.config import settings
 
 logger = logging.getLogger("phisfail.db")
 
-STORAGE_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "storage.json")
+# Use /tmp on Vercel or cloud serverless environments
+if os.environ.get("VERCEL") or (os.path.exists("/tmp") and os.access("/tmp", os.W_OK)):
+    STORAGE_FILE = "/tmp/phisfail_storage.json"
+else:
+    STORAGE_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "storage.json")
+
 
 # Realistic Pre-seeded Cybersecurity Dataset for Immediate Demo
 SEED_SCANS = [
@@ -380,40 +385,50 @@ SEED_COMMUNITY_REPORTS = [
 
 class DatabaseService:
     def __init__(self):
+        self._mem_cache = {
+            "scans": list(SEED_SCANS),
+            "threat_indicators": list(SEED_INDICATORS),
+            "scam_relationships": list(SEED_RELATIONSHIPS),
+            "community_reports": list(SEED_COMMUNITY_REPORTS)
+        }
         self._ensure_storage()
 
     def _ensure_storage(self):
-        os.makedirs(os.path.dirname(STORAGE_FILE), exist_ok=True)
-        if not os.path.exists(STORAGE_FILE):
-            data = {
-                "scans": SEED_SCANS,
-                "threat_indicators": SEED_INDICATORS,
-                "scam_relationships": SEED_RELATIONSHIPS,
-                "community_reports": SEED_COMMUNITY_REPORTS
-            }
-            with open(STORAGE_FILE, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2)
+        try:
+            target_dir = os.path.dirname(STORAGE_FILE)
+            if target_dir:
+                os.makedirs(target_dir, exist_ok=True)
+            if not os.path.exists(STORAGE_FILE):
+                data = {
+                    "scans": SEED_SCANS,
+                    "threat_indicators": SEED_INDICATORS,
+                    "scam_relationships": SEED_RELATIONSHIPS,
+                    "community_reports": SEED_COMMUNITY_REPORTS
+                }
+                with open(STORAGE_FILE, "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=2)
+        except Exception as e:
+            logger.warning(f"Could not initialize local storage file, using in-memory store: {e}")
 
     def _read_data(self) -> Dict[str, Any]:
-        self._ensure_storage()
         try:
-            with open(STORAGE_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
+            if os.path.exists(STORAGE_FILE):
+                with open(STORAGE_FILE, "r", encoding="utf-8") as f:
+                    return json.load(f)
         except Exception as e:
-            logger.error(f"Error reading storage file: {e}")
-            return {
-                "scans": SEED_SCANS,
-                "threat_indicators": SEED_INDICATORS,
-                "scam_relationships": SEED_RELATIONSHIPS,
-                "community_reports": SEED_COMMUNITY_REPORTS
-            }
+            logger.warning(f"Error reading storage file, falling back to in-memory: {e}")
+        return self._mem_cache
 
     def _write_data(self, data: Dict[str, Any]):
+        self._mem_cache = data
         try:
+            target_dir = os.path.dirname(STORAGE_FILE)
+            if target_dir:
+                os.makedirs(target_dir, exist_ok=True)
             with open(STORAGE_FILE, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2)
         except Exception as e:
-            logger.error(f"Error writing to storage: {e}")
+            logger.warning(f"Storage write omitted (serverless/read-only mode active): {e}")
 
     # ================= SCANS =================
     def save_scan(self, scan_data: Dict[str, Any]) -> Dict[str, Any]:

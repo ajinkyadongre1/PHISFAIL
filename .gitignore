@@ -8,6 +8,8 @@ venv/
 .venv/
 env/
 ENV/
+backend/venv/
+backend/.venv/
 env.bak/
 venv.bak/
 
@@ -54,3 +56,4 @@ pnpm-debug.log*
 *.sw?
 .DS_Store
 Thumbs.db
+

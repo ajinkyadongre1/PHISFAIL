@@ -95,25 +95,20 @@ backend\venv\Scripts\activate
 source backend/venv/bin/activate
 
 # Install dependencies
-pip install -r backend/requirements.txt
+pip install -r requirements.txt
 
 # (Optional) Copy environment file and add your API keys
 cp backend/.env.example backend/.env
 
 # Start FastAPI server (runs on http://127.0.0.1:8000)
-uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
+python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-### 3. Set Up the Frontend
-In a separate terminal window:
+### 3. Run the Frontend
+In another terminal:
 ```bash
-cd frontend
-
 # Install packages
 npm install
-
-# (Optional) Copy frontend env
-cp .env.example .env
 
 # Start Vite dev server (runs on http://127.0.0.1:5173)
 npm run dev
@@ -123,21 +118,19 @@ Open your browser at **`http://127.0.0.1:5173/`** to explore the PHISFAIL Defens
 
 ---
 
-## 🚀 Deploying to Vercel
+## 🚀 Deploying to Vercel (1-Click Single Project)
 
-PHISFAIL is preconfigured for seamless deployment on **Vercel**:
+PHISFAIL is architected as a **unified single project** specifically designed for 1-click Vercel deployment:
 
-### Method 1: Full-Stack Deployment (Frontend + Python Serverless API)
-The repository includes a root `vercel.json` and `api/index.py`:
-1. Connect your GitHub repository to [Vercel](https://vercel.com).
-2. Leave the Root Directory as `.` (root).
-3. Vercel automatically builds the frontend via `cd frontend && npm install && npm run build` and serves API routes via Python Serverless functions in `api/index.py`.
-4. (Optional) Add your environment variables (`GEMINI_API_KEY`, `VIRUSTOTAL_API_KEY`, `GOOGLE_SAFE_BROWSING_API_KEY`, `SUPABASE_URL`, `SUPABASE_KEY`) in the Vercel Project Settings.
-
-### Method 2: Frontend-Only Deployment (with external Backend)
-1. In Vercel, set the **Root Directory** to `frontend`.
-2. Framework Preset: **Vite**.
-3. Under Environment Variables, set `VITE_API_BASE_URL` to your deployed backend URL (e.g. on Railway, Render, or Fly.io).
+1. Go to your [Vercel Dashboard](https://vercel.com/dashboard) and click **"Add New" > "Project"**.
+2. Select your repository: **`ajinkyadongre1/PHISFAIL`**.
+3. Vercel automatically detects:
+   - **Framework Preset**: `Vite`
+   - **Root Directory**: `./` (Single Unified Project)
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+4. Click **Deploy**!
+5. All frontend pages are deployed instantly to Vercel's global edge network, and all `/api/*` endpoints are automatically handled by the serverless Python handler in `api/index.py`.
 
 ---
 

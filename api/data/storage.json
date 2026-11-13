@@ -1,0 +1,466 @@
+{
+  "scans": [
+    {
+      "id": "scan-sbi-001",
+      "scan_type": "url",
+      "target_input": "https://sbi-yono-update-kyc.org/login.php",
+      "sanitized_input": "https://sbi-yono-update-kyc[.]org/login.php",
+      "risk_score": 94,
+      "risk_category": "MALICIOUS",
+      "verdict": "High-confidence State Bank of India Credential Harvester",
+      "detected_signals": [
+        {
+          "name": "Domain Impersonation",
+          "severity": "HIGH",
+          "detail": "Targets 'State Bank of India (SBI)' without legitimate ownership"
+        },
+        {
+          "name": "Suspicious TLD & Age",
+          "severity": "HIGH",
+          "detail": "Newly registered domain on free registrar with deceptive keywords"
+        },
+        {
+          "name": "Credential Harvesting Form",
+          "severity": "CRITICAL",
+          "detail": "Contains input fields targeting NetBanking Password and OTP"
+        },
+        {
+          "name": "Heuristic Threat Intel Match",
+          "severity": "HIGH",
+          "detail": "Matches active 'Chakra-SBI' mobile phishing kit signature"
+        }
+      ],
+      "recommendations": [
+        "DO NOT click, enter credentials, or submit OTP on this webpage.",
+        "If you entered information, immediately freeze your account via SBI helpline 1800-1234 or your netbanking portal.",
+        "Report this URL to the National Cyber Crime Reporting Portal (1930 / cybercrime.gov.in)."
+      ],
+      "telemetry": {
+        "domain": "sbi-yono-update-kyc.org",
+        "ip": "194.26.29.112",
+        "asn": "AS49505 (HostRoyale AS)",
+        "country": "RU",
+        "ssl_issuer": "cPanel, Inc. Certification Authority (Domain Validated)",
+        "dns_mx_records": "None (no email handling capability)"
+      },
+      "is_demo": true,
+      "created_at": "2026-11-13T09:15:00Z"
+    },
+    {
+      "id": "scan-post-002",
+      "scan_type": "sms",
+      "target_input": "India Post Alert: Your parcel #IN889271 cannot be delivered due to incomplete street address. Update details within 12 hours at https://indiapost-parcel-tracking.vip or package will be returned to customs.",
+      "sanitized_input": "India Post Alert: Your parcel #IN889271 cannot be delivered... [URL redacted]",
+      "risk_score": 88,
+      "risk_category": "MALICIOUS",
+      "verdict": "Fraudulent Postal Smishing Delivery Scam",
+      "detected_signals": [
+        {
+          "name": "Urgency & Fear Induction",
+          "severity": "HIGH",
+          "detail": "Imposes artificial '12 hours' deadline to provoke impulsive clicking"
+        },
+        {
+          "name": "Government/Postal Spoofing",
+          "severity": "HIGH",
+          "detail": "Impersonates India Post (Department of Posts)"
+        },
+        {
+          "name": "Suspicious TLD (.vip)",
+          "severity": "MEDIUM",
+          "detail": "Official government services utilize '.gov.in' exclusively"
+        },
+        {
+          "name": "Payment Phishing Trap",
+          "severity": "CRITICAL",
+          "detail": "Extracts small 're-delivery fee' of Rs 25 to capture credit/debit card details"
+        }
+      ],
+      "recommendations": [
+        "India Post never requests redelivery charges or address updates via unsolicited SMS links.",
+        "Legitimate tracking is available only at https://www.indiapost.gov.in.",
+        "Forward this SMS to 1909 (TRAI DND Fraud Reporting) and report on the Sanchar Saathi portal."
+      ],
+      "telemetry": {
+        "sender_id": "+91-9123847291",
+        "sms_category": "Postal Delivery Scam",
+        "extracted_urls": [
+          "https://indiapost-parcel-tracking.vip"
+        ],
+        "language_detected": "English"
+      },
+      "is_demo": true,
+      "created_at": "2026-11-13T08:30:00Z"
+    },
+    {
+      "id": "scan-bijli-003",
+      "scan_type": "sms",
+      "target_input": "Bijli bill update: Priye grahak, aapka bijli bill update nahi hua hai. Aaj raat 9:30 baje electricity supply disconnect ho jayegi. Turant electricity officer se sampark karein: 9876543210 ya link kholen http://bijli-bill-seva.in",
+      "sanitized_input": "Bijli bill update: Priye grahak... [Hinglish Disconnection Scam]",
+      "risk_score": 92,
+      "risk_category": "MALICIOUS",
+      "verdict": "Electricity Bill Disconnection Extortion Fraud (Hindi/Hinglish)",
+      "detected_signals": [
+        {
+          "name": "Utility Supply Threat",
+          "severity": "HIGH",
+          "detail": "Threatens power cutoff at '9:30 baje' to cause panic"
+        },
+        {
+          "name": "Unauthorized Phone Contact",
+          "severity": "HIGH",
+          "detail": "Routes victims to a scammer's personal mobile number instead of DISCOM call center"
+        },
+        {
+          "name": "Remote Access Trojan Vector",
+          "severity": "CRITICAL",
+          "detail": "Known to request installation of AnyDesk/TeamViewer/RustDesk under the guise of an APK"
+        }
+      ],
+      "recommendations": [
+        "Electricity distribution boards (DISCOMs) never send personal mobile numbers for bill payments.",
+        "Never install any APK or screen-sharing application (AnyDesk, TeamViewer) instructed over a phone call.",
+        "Verify your bill status directly on your official state electricity board portal or authorized app."
+      ],
+      "telemetry": {
+        "sender_id": "VM-POWDIS",
+        "sms_category": "Utility Disconnection Extortion",
+        "extracted_urls": [
+          "http://bijli-bill-seva.in"
+        ],
+        "language_detected": "Hindi/Hinglish"
+      },
+      "is_demo": true,
+      "created_at": "2026-11-13T07:45:00Z"
+    },
+    {
+      "id": "scan-github-004",
+      "scan_type": "url",
+      "target_input": "https://github.com/torvalds/linux",
+      "sanitized_input": "https://github.com/torvalds/linux",
+      "risk_score": 4,
+      "risk_category": "SAFE",
+      "verdict": "Legitimate High-Reputation Platform (Low Risk)",
+      "detected_signals": [
+        {
+          "name": "Established Domain",
+          "severity": "INFO",
+          "detail": "Legitimate enterprise domain with 15+ years WHOIS age"
+        },
+        {
+          "name": "Valid Extended TLS",
+          "severity": "INFO",
+          "detail": "Valid SSL certificate issued by DigiCert Inc"
+        },
+        {
+          "name": "Clean Threat Intel Feeds",
+          "severity": "INFO",
+          "detail": "0/88 detection flags across all global intelligence partners"
+        }
+      ],
+      "recommendations": [
+        "Domain has verified legitimate standing.",
+        "Always inspect URLs for typosquatting before entering sensitive developer tokens or SSH credentials."
+      ],
+      "telemetry": {
+        "domain": "github.com",
+        "ip": "140.82.121.4",
+        "asn": "AS36459 (GitHub, Inc.)",
+        "country": "US",
+        "ssl_issuer": "DigiCert Inc"
+      },
+      "is_demo": true,
+      "created_at": "2026-11-13T06:20:00Z"
+    },
+    {
+      "id": "scan-qr-005",
+      "scan_type": "qr",
+      "target_input": "https://parking-meter-pay-fast.top/meter-id?slot=402",
+      "sanitized_input": "https://parking-meter-pay-fast[.]top/meter-id?slot=402",
+      "risk_score": 79,
+      "risk_category": "SUSPICIOUS",
+      "verdict": "Suspicious Physical QR Code Replacement (Quishing)",
+      "detected_signals": [
+        {
+          "name": "Quishing Vector",
+          "severity": "HIGH",
+          "detail": "QR payload directs to newly registered non-official payment portal"
+        },
+        {
+          "name": "Suspicious TLD (.top)",
+          "severity": "MEDIUM",
+          "detail": "Frequently abused for rapid-disposal phishing lures"
+        },
+        {
+          "name": "Credit Card Harvesting",
+          "severity": "HIGH",
+          "detail": "Requests direct payment without localized municipal gateway validation"
+        }
+      ],
+      "recommendations": [
+        "Do not enter payment details on stickers placed over municipal parking meters.",
+        "Use the official city parking application or pay at the physical terminal kiosk."
+      ],
+      "telemetry": {
+        "domain": "parking-meter-pay-fast.top",
+        "ip": "104.21.32.19",
+        "asn": "AS13335 (Cloudflare, Inc.)",
+        "country": "US"
+      },
+      "is_demo": true,
+      "created_at": "2026-11-12T18:10:00Z"
+    }
+  ],
+  "threat_indicators": [
+    {
+      "id": "ind-sbi-1",
+      "indicator_type": "domain",
+      "indicator_value": "sbi-yono-update-kyc.org",
+      "reputation_score": 94,
+      "times_seen": 47,
+      "scam_category": "Banking Phishing",
+      "targeted_brand": "State Bank of India",
+      "metadata": {
+        "hosting_ip": "194.26.29.112",
+        "kit": "Kit-Chakra-v3"
+      }
+    },
+    {
+      "id": "ind-sbi-2",
+      "indicator_type": "domain",
+      "indicator_value": "sbi-online-pan-auth.com",
+      "reputation_score": 92,
+      "times_seen": 38,
+      "scam_category": "Banking Phishing",
+      "targeted_brand": "State Bank of India",
+      "metadata": {
+        "hosting_ip": "194.26.29.112",
+        "kit": "Kit-Chakra-v3"
+      }
+    },
+    {
+      "id": "ind-ip-1",
+      "indicator_type": "ip",
+      "indicator_value": "194.26.29.112",
+      "reputation_score": 96,
+      "times_seen": 112,
+      "scam_category": "Bulletproof Hosting Cluster",
+      "targeted_brand": "Multiple Indian Banks",
+      "metadata": {
+        "asn": "AS49505",
+        "geo": "RU"
+      }
+    },
+    {
+      "id": "ind-kit-1",
+      "indicator_type": "kit_signature",
+      "indicator_value": "Kit-Chakra-SBI-v3",
+      "reputation_score": 98,
+      "times_seen": 84,
+      "scam_category": "Phishing Kit Fingerprint",
+      "targeted_brand": "State Bank of India",
+      "metadata": {
+        "features": [
+          "OTP Interceptor",
+          "Telegram Exfiltration Bot",
+          "Dynamic PAN Validator"
+        ]
+      }
+    },
+    {
+      "id": "ind-sms-sender-1",
+      "indicator_type": "sender_id",
+      "indicator_value": "CP-SBIBNK",
+      "reputation_score": 89,
+      "times_seen": 63,
+      "scam_category": "SMS Header Spoofing",
+      "targeted_brand": "State Bank of India",
+      "metadata": {
+        "smsc_route": "International Gateway Bypass"
+      }
+    },
+    {
+      "id": "ind-post-1",
+      "indicator_type": "domain",
+      "indicator_value": "indiapost-parcel-tracking.vip",
+      "reputation_score": 88,
+      "times_seen": 51,
+      "scam_category": "Postal Smishing",
+      "targeted_brand": "India Post",
+      "metadata": {
+        "hosting_ip": "45.142.214.88",
+        "kit": "Kit-PostalDrainer"
+      }
+    },
+    {
+      "id": "ind-post-2",
+      "indicator_type": "domain",
+      "indicator_value": "india-postal-customs-clear.net",
+      "reputation_score": 86,
+      "times_seen": 29,
+      "scam_category": "Postal Smishing",
+      "targeted_brand": "India Post",
+      "metadata": {
+        "hosting_ip": "45.142.214.88",
+        "kit": "Kit-PostalDrainer"
+      }
+    },
+    {
+      "id": "ind-ip-2",
+      "indicator_type": "ip",
+      "indicator_value": "45.142.214.88",
+      "reputation_score": 90,
+      "times_seen": 76,
+      "scam_category": "Postal Phishing CDN",
+      "targeted_brand": "India Post / DHL",
+      "metadata": {
+        "asn": "AS58061",
+        "geo": "NL"
+      }
+    },
+    {
+      "id": "ind-phone-1",
+      "indicator_type": "phone",
+      "indicator_value": "+91-9876543210",
+      "reputation_score": 85,
+      "times_seen": 19,
+      "scam_category": "Electricity Bill Extortion Ring",
+      "targeted_brand": "State Electricity Boards (DISCOMs)",
+      "metadata": {
+        "region": "Mewat/Jamtara cluster"
+      }
+    },
+    {
+      "id": "ind-upi-1",
+      "indicator_type": "upi",
+      "indicator_value": "discom.billupdate@okaxis",
+      "reputation_score": 91,
+      "times_seen": 34,
+      "scam_category": "Mule UPI Handle",
+      "targeted_brand": "Electricity Customers",
+      "metadata": {
+        "mule_bank": "Axis Bank"
+      }
+    }
+  ],
+  "scam_relationships": [
+    {
+      "id": "rel-1",
+      "source": "ind-sbi-1",
+      "target": "ind-ip-1",
+      "relation_type": "hosted_on",
+      "confidence_score": 0.99,
+      "relation_reason": "Both malicious SBI domains resolve directly to bulletproof host IP 194.26.29.112"
+    },
+    {
+      "id": "rel-2",
+      "source": "ind-sbi-2",
+      "target": "ind-ip-1",
+      "relation_type": "hosted_on",
+      "confidence_score": 0.99,
+      "relation_reason": "Co-located on identical bulletproof host IP 194.26.29.112"
+    },
+    {
+      "id": "rel-3",
+      "source": "ind-sbi-1",
+      "target": "ind-kit-1",
+      "relation_type": "utilizes_kit",
+      "confidence_score": 0.95,
+      "relation_reason": "DOM source code contains identical Telegram exfiltration bot endpoint and form CSS fingerprints"
+    },
+    {
+      "id": "rel-4",
+      "source": "ind-sbi-2",
+      "target": "ind-kit-1",
+      "relation_type": "utilizes_kit",
+      "confidence_score": 0.95,
+      "relation_reason": "Shares identical JavaScript obfuscation and credential validator schema"
+    },
+    {
+      "id": "rel-5",
+      "source": "ind-sbi-1",
+      "target": "ind-sms-sender-1",
+      "relation_type": "distributed_via",
+      "confidence_score": 0.88,
+      "relation_reason": "Over 40 community reports trace incoming SMS with header CP-SBIBNK directing to this domain"
+    },
+    {
+      "id": "rel-6",
+      "source": "ind-post-1",
+      "target": "ind-ip-2",
+      "relation_type": "hosted_on",
+      "confidence_score": 0.98,
+      "relation_reason": "Direct A-record DNS pointing to postal phishing server IP 45.142.214.88"
+    },
+    {
+      "id": "rel-7",
+      "source": "ind-post-2",
+      "target": "ind-ip-2",
+      "relation_type": "hosted_on",
+      "confidence_score": 0.98,
+      "relation_reason": "Co-hosted on identical ASN IP block targeting customs duty payment scams"
+    },
+    {
+      "id": "rel-8",
+      "source": "ind-phone-1",
+      "target": "ind-upi-1",
+      "relation_type": "mule_payment_link",
+      "confidence_score": 0.85,
+      "relation_reason": "Phone caller instructs victim to transfer Rs 10 verification charge to mule UPI discom.billupdate@okaxis"
+    }
+  ],
+  "community_reports": [
+    {
+      "id": "com-001",
+      "target_value": "https://sbi-yono-update-kyc.org",
+      "report_type": "url",
+      "threat_category": "Banking Phishing",
+      "targeted_brand": "State Bank of India",
+      "description": "Received SMS claiming my YONO netbanking was suspended due to unlinked PAN card. The webpage looked very identical to SBI official portal.",
+      "evidence_text": "SMS from CP-SBIBNK: 'Dear customer, your SBI account is blocked. Update PAN card at https://sbi-yono-update-kyc.org to resume services.'",
+      "upvotes": 42,
+      "status": "verified",
+      "is_public": true,
+      "created_at": "2026-11-13T07:15:00Z"
+    },
+    {
+      "id": "com-002",
+      "target_value": "https://indiapost-parcel-tracking.vip",
+      "report_type": "url",
+      "threat_category": "Postal Delivery Scam",
+      "targeted_brand": "India Post",
+      "description": "Claimed my parcel could not be delivered and asked for Rs 35 re-delivery fee. Upon clicking pay, requested full CVV and OTP.",
+      "evidence_text": "SMS: 'Your India Post parcel is stuck at hub due to incomplete house number. Update within 12 hours.'",
+      "upvotes": 29,
+      "status": "verified",
+      "is_public": true,
+      "created_at": "2026-11-13T06:40:00Z"
+    },
+    {
+      "id": "com-003",
+      "target_value": "+91-9876543210",
+      "report_type": "phone",
+      "threat_category": "Electricity Disconnection Extortion",
+      "targeted_brand": "State DISCOM",
+      "description": "Caller claimed to be junior engineer from electricity board. Told me power will be cut in 30 minutes if I don't send bill receipt or download 'QuickSupport' app.",
+      "evidence_text": "Received multiple automated calls prompting to dial this number.",
+      "upvotes": 18,
+      "status": "verified",
+      "is_public": true,
+      "created_at": "2026-11-12T20:10:00Z"
+    },
+    {
+      "id": "com-004",
+      "target_value": "https://netflix-subscription-renew.online",
+      "report_type": "url",
+      "threat_category": "Streaming Credential Theft",
+      "targeted_brand": "Netflix",
+      "description": "Email claimed payment failed for monthly plan. Directed to fake Netflix login that steals credit card numbers.",
+      "evidence_text": "Email subject: 'Your Netflix membership is on hold'",
+      "upvotes": 12,
+      "status": "pending_review",
+      "is_public": true,
+      "created_at": "2026-11-12T15:22:00Z"
+    }
+  ]
+}
